@@ -1,10 +1,12 @@
 using Newtonsoft.Json;
 using System.IO;
+
 namespace DynamicForm
 {
     public partial class Form1 : Form
     {
-        FormConfig config;
+        private FormConfig _config;
+
         public Form1()
         {
             InitializeComponent();
@@ -12,62 +14,64 @@ namespace DynamicForm
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            string json = File.ReadAllText("formconfig.json");
+            var json = File.ReadAllText("formconfig.json");
+            _config = JsonConvert.DeserializeObject<FormConfig>(json);
 
-            config = JsonConvert.DeserializeObject<FormConfig>(json);
+            this.Text = _config.formTitle;
 
-            this.Text = config.formTitle;
-
-            GenerateControls();
+            LoadControls();
         }
-        private void GenerateControls()
+
+        private void LoadControls()
         {
             int top = 20;
 
-            foreach (var control in config.controls)
+            foreach (var item in _config.controls)
             {
-                if (control.type == "TextBox")
+                if (item.type == "TextBox")
                 {
                     Label lbl = new Label();
-                    lbl.Text = control.label;
+                    lbl.Text = item.label;
                     lbl.Left = 20;
                     lbl.Top = top;
 
                     TextBox txt = new TextBox();
-                    txt.Name = control.name;
+                    txt.Name = item.name;
                     txt.Left = 150;
                     txt.Top = top;
+                    txt.Tag = item.label;
 
                     this.Controls.Add(lbl);
                     this.Controls.Add(txt);
 
                     top += 40;
                 }
-
-                else if (control.type == "ComboBox")
+                else if (item.type == "ComboBox")
                 {
                     Label lbl = new Label();
-                    lbl.Text = control.label;
+                    lbl.Text = item.label;
                     lbl.Left = 20;
                     lbl.Top = top;
 
                     ComboBox cmb = new ComboBox();
-                    cmb.Name = control.name;
+                    cmb.Name = item.name;
                     cmb.Left = 150;
                     cmb.Top = top;
+                    cmb.Tag = item.label;
 
-                    cmb.Items.AddRange(control.items.ToArray());
+                    if (item.items != null)
+                        cmb.Items.AddRange(item.items.ToArray());
 
                     this.Controls.Add(lbl);
                     this.Controls.Add(cmb);
 
                     top += 40;
                 }
-
-                else if (control.type == "CheckBox")
+                else if (item.type == "CheckBox")
                 {
                     CheckBox chk = new CheckBox();
-                    chk.Text = control.text;
+                    chk.Name = item.name;
+                    chk.Text = item.text;
                     chk.Left = 150;
                     chk.Top = top;
 
@@ -75,11 +79,11 @@ namespace DynamicForm
 
                     top += 40;
                 }
-
-                else if (control.type == "Button")
+                else if (item.type == "Button")
                 {
                     Button btn = new Button();
-                    btn.Text = control.text;
+                    btn.Name = item.name;
+                    btn.Text = item.text;
                     btn.Left = 150;
                     btn.Top = top;
 
@@ -94,21 +98,33 @@ namespace DynamicForm
         {
             string result = "";
 
-            foreach (Control c in this.Controls)
+            foreach (Control ctrl in this.Controls)
             {
-                if (c is TextBox)
+                if (ctrl is TextBox txt)
                 {
-                    result += c.Name + " : " + c.Text + "\n";
-                }
+                    if (string.IsNullOrWhiteSpace(txt.Text))
+                    {
+                        MessageBox.Show("Please enter " + txt.Tag);
+                        txt.Focus();
+                        return;
+                    }
 
-                if (c is ComboBox)
-                {
-                    result += c.Name + " : " + c.Text + "\n";
+                    result += $"{txt.Tag} : {txt.Text}\n";
                 }
-
-                if (c is CheckBox chk)
+                else if (ctrl is ComboBox cmb)
                 {
-                    result += chk.Text + " : " + chk.Checked + "\n";
+                    if (string.IsNullOrWhiteSpace(cmb.Text))
+                    {
+                        MessageBox.Show("Please select " + cmb.Tag);
+                        cmb.Focus();
+                        return;
+                    }
+
+                    result += $"{cmb.Tag} : {cmb.Text}\n";
+                }
+                else if (ctrl is CheckBox chk)
+                {
+                    result += $"{chk.Text} : {chk.Checked}\n";
                 }
             }
 

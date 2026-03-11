@@ -18,3 +18,4 @@ C:\Users\sathy\source\repos\DynamicForm\DynamicForm\obj\Debug\net10.0-windows\Dy
 C:\Users\sathy\source\repos\DynamicForm\DynamicForm\obj\Debug\net10.0-windows\DynamicForm.genruntimeconfig.cache
 C:\Users\sathy\source\repos\DynamicForm\DynamicForm\obj\Debug\net10.0-windows\ref\DynamicForm.dll
 C:\Users\sathy\source\repos\DynamicForm\DynamicForm\bin\Debug\net10.0-windows\formconfig.json
+C:\Users\sathy\source\repos\DynamicForm\DynamicForm\obj\Debug\net10.0-windows\DynamicForm.sourcelink.json

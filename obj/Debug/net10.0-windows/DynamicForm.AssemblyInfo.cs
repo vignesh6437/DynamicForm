@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DynamicForm")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+003f91a1d452fda25f30b080d9c9052ede81baea")]
 [assembly: System.Reflection.AssemblyProductAttribute("DynamicForm")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DynamicForm")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
