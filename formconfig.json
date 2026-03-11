@@ -1,0 +1,33 @@
+{
+  "formTitle": "User Registration",
+  "controls": [
+    {
+      "type": "TextBox",
+      "name": "txtFirstName",
+      "label": "First Name",
+      "required": true
+    },
+    {
+      "type": "TextBox",
+      "name": "txtEmail",
+      "label": "Email",
+      "required": true
+    },
+    {
+      "type": "ComboBox",
+      "name": "cmbRole",
+      "label": "Role",
+      "items": [ "Admin", "User", "Manager" ]
+    },
+    {
+      "type": "CheckBox",
+      "name": "chkTerms",
+      "text": "Accept Terms"
+    },
+    {
+      "type": "Button",
+      "name": "btnSubmit",
+      "text": "Submit"
+    }
+  ]
+}
